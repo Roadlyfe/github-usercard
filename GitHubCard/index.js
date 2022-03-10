@@ -6,6 +6,12 @@ import axios from 'axios';
     https://api.github.com/users/<your name>
 */
 
+axios.get('https://api.github.com/users/Roadlyfe')
+  .then(res => {
+    console.log(res.data);
+  })
+  .catch(err => console.error(err));
+
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
     github info! You will need to understand the structure of this
@@ -51,6 +57,32 @@ const followersArray = [];
       </div>
     </div>
 */
+
+function githubCard(gitInfo) {
+  const card = document.createElement('div');
+  const img = document.createElement('img');
+  const cardInfo = document.createElement('div');
+  const name = document.createElement('h3');
+  const login = document.createElement('p');
+  const location = document.createElement('p');
+  const profile = document.createElement('p');
+  const profileLink = document.createElement('a');
+  const followers = document.createElement('p');
+  const following = document.createElement('p');
+  const bio = document.createElement('p');
+
+  img.src = gitInfo.avatar_url;
+  img.alt = "github user";
+  name.textContent = gitInfo.name;
+  login.textContent = gitInfo.login;
+  location.textContent = gitInfo.location;
+  profile.textContent = "Profile";
+  profileLink.textContent = "Link to profile";
+  profileLink.href = gitInfo.html_url;
+  followers.textContent = `Followers: ${gitInfo.followers}`;
+  following.textContent = `Following: ${gitInfo.following}`;
+  bio.textContent = gitInfo.bio;
+}
 
 /*
   List of LS Instructors Github username's:
