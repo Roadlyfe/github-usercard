@@ -6,12 +6,20 @@ import axios from 'axios';
     https://api.github.com/users/<your name>
 */
 
-axios.get('https://api.github.com/users/Roadlyfe')
+const followersArray = ['tetondan', 'dustinmyers', 'justsml', 'luishrd', 'bigknell', 'crharding', 'Roadlyfe'];
+
+for (let i = 0; i < followersArray.length; i++) {
+  getGitCard(followersArray[i]);
+}
+
+
+function getGitCard(username) {
+axios.get(`https://api.github.com/users/${username}`)
   .then(res => {
-    console.log(res.data);
+    document.querySelector('.cards').appendChild(githubCard(res.data));
   })
   .catch(err => console.error(err));
-
+}
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
     github info! You will need to understand the structure of this
@@ -36,7 +44,6 @@ axios.get('https://api.github.com/users/Roadlyfe')
     user, and adding that card to the DOM.
 */
 
-const followersArray = [];
 
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
@@ -58,6 +65,8 @@ const followersArray = [];
     </div>
 */
 
+
+
 function githubCard(gitInfo) {
   const card = document.createElement('div');
   const img = document.createElement('img');
@@ -71,6 +80,11 @@ function githubCard(gitInfo) {
   const following = document.createElement('p');
   const bio = document.createElement('p');
 
+  card.classList.add('card');
+  cardInfo.classList.add('card-info');
+  name.classList.add('name');
+  login.classList.add('username');
+
   img.src = gitInfo.avatar_url;
   img.alt = "github user";
   name.textContent = gitInfo.name;
@@ -82,6 +96,20 @@ function githubCard(gitInfo) {
   followers.textContent = `Followers: ${gitInfo.followers}`;
   following.textContent = `Following: ${gitInfo.following}`;
   bio.textContent = gitInfo.bio;
+
+  card.appendChild(img);
+  card.appendChild(cardInfo);
+  cardInfo.appendChild(name);
+  cardInfo.appendChild(login);
+  cardInfo.appendChild(location);
+  cardInfo.appendChild(profile);
+  profile.appendChild(profileLink);
+  cardInfo.appendChild(followers);
+  cardInfo.appendChild(following);
+  cardInfo.appendChild(bio);
+
+return card;
+
 }
 
 /*
